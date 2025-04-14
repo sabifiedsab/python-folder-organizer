@@ -79,22 +79,26 @@ def user_loop(main_dir, main_dir_json):
             except ValueError as e:
                 print(e)
                 continue
+            
+            try:
+                # LLM Commands (Illustrative - needs full implementation)
+                if user_input.startswith("info "):
+                    want_dir = user_input[5:].strip('"')  # Extract directory name
+                    context = llm.get_context(want_dir)
+                    print(Fore.GREEN + context + Style.RESET_ALL) # Green text
 
-            # LLM Commands (Illustrative - needs full implementation)
-            if user_input.startswith("info "):
-                want_dir = user_input[5:].strip('"')  # Extract directory name
-                context = llm.get_context(want_dir)
-                print(Fore.GREEN + context + Style.RESET_ALL) # Green text
-
-            elif user_input.startswith("moreinfo "):
-                want_dir = user_input[9:].strip('"')
-                query = input("Enter the query: ")
-                info = llm.get_info_based_on_query(want_dir, query)
-                print(Fore.BLUE + info + Style.RESET_ALL) # Blue text
-            elif user_input.startswith("inst "):
-                want_dir = user_input[5:].strip('"')
-                install = llm.get_is_installation(want_dir)
-                print(Fore.YELLOW + install + Style.RESET_ALL) # Yellow text
+                elif user_input.startswith("moreinfo "):
+                    want_dir = user_input[9:].strip('"')
+                    query = input("Enter the query: ")
+                    info = llm.get_info_based_on_query(want_dir, query)
+                    print(Fore.BLUE + info + Style.RESET_ALL) # Blue text
+                elif user_input.startswith("inst "):
+                    want_dir = user_input[5:].strip('"')
+                    install = llm.get_is_installation(want_dir)
+                    print(Fore.YELLOW + install + Style.RESET_ALL) # Yellow text
+            except ValueError as e:
+                print(e)
+                continue
                 
         except ValueError as e:
             print(Fore.RED + Style.BRIGHT + f"An error occurred: {e}" + Style.RESET_ALL)
@@ -126,5 +130,8 @@ if __name__ == "__main__":
     
     main_dir, main_dir_json = get_main_directory()
     #organize_directories(main_dir)
-    main_dir_json = user_loop(main_dir, main_dir_json)
+    try:
+        main_dir_json = user_loop(main_dir, main_dir_json)
+    except Exception as e:
+        print(Fore.RED + Style.BRIGHT + f"An error occurred. {e.with_traceback()}: {e}" + Style.RESET_ALL)
     save_main_dir_json(main_dir_json)
