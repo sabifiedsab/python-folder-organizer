@@ -1,0 +1,14 @@
+{
+    "$path": {
+        "keep": [],
+        "recon": [],
+        "delete": []
+    },
+    "D:\\Coding": {
+        "keep": [
+            "GX Mods"
+        ],
+        "recon": [],
+        "delete": []
+    }
+}
