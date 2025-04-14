@@ -4,11 +4,26 @@
         "recon": [],
         "delete": []
     },
-    "D:\\Coding": {
+    "E:\\": {
         "keep": [
-            "GX Mods"
+            "Unity",
+            "12 days of Nintendo 2020.txt",
+            "Aron",
+            "yt audio",
+            "Visual Basic"
         ],
-        "recon": [],
-        "delete": []
+        "recon": [
+            "YandereSimLauncher",
+            "World Controller",
+            "website",
+            "Website",
+            "Virtualbox VMs",
+            "VirtualBox VMs"
+        ],
+        "delete": [
+            "Among Us Capture",
+            "Voicemod",
+            "Virtual Box"
+        ]
     }
 }

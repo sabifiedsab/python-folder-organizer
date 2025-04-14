@@ -48,9 +48,21 @@ def user_loop(main_dir, main_dir_json):
 
             if user_input == "list":
                 directories = list_directories(main_dir)
+                set_directories = []
+                
+                for dir in main_dir_json["keep"]:
+                    set_directories.append(dir)
+                
+                for dir in main_dir_json["recon"]:
+                    set_directories.append(dir)
+                
+                for dir in main_dir_json["delete"]:
+                    set_directories.append(dir)
+                
                 print(Fore.RED + Style.BRIGHT + "Directories:" + Style.RESET_ALL)
                 for directory in directories:
-                    print(directory.name)
+                    if directory.name not in set_directories:
+                        print(directory.name)
                 continue
 
             try:
@@ -61,7 +73,7 @@ def user_loop(main_dir, main_dir_json):
                 if command == "keep":
                     main_dir_json = add_status(main_dir, main_dir_json, "keep", target_dir)
                 elif command == "recon":
-                    main_dir_json = add_status(main_dir, main_dir_json, "reconsider", target_dir)
+                    main_dir_json = add_status(main_dir, main_dir_json, "recon", target_dir)
                 elif command == "delete":
                     main_dir_json = add_status(main_dir, main_dir_json, "delete", target_dir)
             except ValueError as e:
@@ -79,6 +91,11 @@ def user_loop(main_dir, main_dir_json):
                 query = input("Enter the query: ")
                 info = llm.get_info_based_on_query(want_dir, query)
                 print(Fore.BLUE + info + Style.RESET_ALL) # Blue text
+            elif user_input.startswith("inst "):
+                want_dir = user_input[5:].strip('"')
+                install = llm.get_is_installation(want_dir)
+                print(Fore.YELLOW + install + Style.RESET_ALL) # Yellow text
+                
         except ValueError as e:
             print(Fore.RED + Style.BRIGHT + f"An error occurred: {e}" + Style.RESET_ALL)
 
